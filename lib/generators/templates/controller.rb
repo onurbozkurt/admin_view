@@ -2,9 +2,6 @@ class Admin::<%= controller_class_name %>Controller < Admin::BaseController
   before_filter :find_<%= singular_table_name %>, :only => [:show, :edit, :update, :destroy]
 
   def index
-    @q = <%= class_name %>.search(params[:q])
-    @<%= plural_table_name %> = find_<%= plural_table_name %>
-
     return redirect_to session[:filter_<%= plural_table_name %>] if session[:filter_<%= plural_table_name %>] && params[:back] == "true"
     session[:filter_<%= plural_table_name %>] = request.original_url
 

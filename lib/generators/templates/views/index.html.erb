@@ -4,7 +4,7 @@
 <div class="pull-left">
   <div class="btn-toolbar">
     <%= link_to "Yeni Kayıt", new_admin_<%= singular_table_name %>_path, :class => "btn btn-primary" %>
-    <% if params[:q] %>
+    <%% if params[:q] %>
       <div class="btn-group">
         <a href="#filters" role="button" class="btn btn-warning" data-toggle="modal"><i class="icon-filter"></i> Filtrele</a>
         <button class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
@@ -14,9 +14,9 @@
           <li><%= link_to "Temizle", admin_<%= plural_table_name %>_path, :class => '' %></li>
         </ul>
       </div>
-    <% else %>
+    <%% else %>
       <a href="#filters" role="button" class="btn" data-toggle="modal"><i class="icon-filter"></i> Filtrele</a>
-    <% end %>
+    <%% end %>
     <%= link_to raw('<i class="icon-black icon-file"></i> Export'), admin_<%= plural_table_name %>_path(params.merge(format: 'xls')), :class => "btn" %>
   </div>
 </div>
