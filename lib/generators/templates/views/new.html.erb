@@ -1,7 +1,2 @@
-<div class="page-header">
-  <h1>Create new <%= human_name.downcase %></h1>
-</div>
-
-<%%= form_for [:admin, @<%= singular_table_name %>], :html => { :class => "form-horizontal", :role => "form" } do |f| -%>
-  <%%= render "form", { :f => f } %>
-<%% end -%>
+<% @title = "<%= human_name.pluralize %>" %>
+<%%= render "form" %>

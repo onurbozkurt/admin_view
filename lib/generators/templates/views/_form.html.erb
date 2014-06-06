@@ -1,24 +1,14 @@
-<%% if @<%= singular_table_name %>.errors.any? -%>
-  <ul class="errors">
-  <%% @<%= singular_table_name %>.errors.full_messages.each do |msg| %>
-    <li><%%= msg %></li>
-  <%% end %>
-  </ul>
-<%% end %>
+<%= simple_form_for [:admin, @<%= singular_table_name %>], :url => url, :html => { :class => 'form-horizontal', :autocomplete => "off", :multipart => true } do |f| %>
+  <fieldset>
+    <% @attributes.each do |attribute| -%>
+      <% next if ["id", "created_at", "updated_at"].include?(attribute.name) -%>
+      <%%= f.input :<%= attribute.name %>, :label => "<%= attribute.name.capitalize %>" %>
+    <% end -%>
+  </fieldset>
 
-<% @attributes.each do |attribute| -%>
-  <% next if ["id", "created_at", "updated_at"].include?(attribute.name) -%>
-  <div class="form-group">
-    <%%= f.label :<%= attribute.name %>, :class => "col-sm-2 control-label" %>
-    <div class="col-sm-4">
-      <%%= f.text_field :<%= attribute.name %>, :class => "form-control", :placeholder => "<%= attribute.name.capitalize %>" %>
-    </div>
+  <div class="form-actions">
+    <%= f.button :submit, "Kaydet", :class => 'btn-primary' %>
+    <%= link_to "Yeni Kayıt", new_admin_<%= singular_table_name %>_path, :class => 'btn btn-warning' %>
+    <%= link_to "Geri Dön", admin_<%= plural_table_name %>_path(:back => true), :class => 'btn' %>
   </div>
-<% end -%>
-
-<%% label = @<%= singular_table_name %>.new_record? ? "Create" : "Update" -%>
-<div class="form-group">
-  <div class="col-sm-offset-2 col-sm-4">
-    <button type="submit" class="btn btn-default"><%%= label %></button>
-  </div>
-</div>
+<% end %>
