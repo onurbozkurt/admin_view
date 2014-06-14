@@ -14,6 +14,7 @@ class AdminViewGenerator < Rails::Generators::NamedBase
   end
 
   def create_controller
+    @attributes = get_model_columns
     template "controller.rb", File.join("app/controllers/admin", "#{controller_file_name}_controller.rb")
   end
 
@@ -28,8 +29,9 @@ class AdminViewGenerator < Rails::Generators::NamedBase
   def add_resource_route
     return if not File.exists?("config/routes.rb")
     route_config =  "namespace :admin do "
-    route_config << "resources :#{file_name.pluralize}"
-    route_config << " end"
+    route_config << "resources :#{file_name.pluralize} do "
+    route_config << "member do get 'move_up', 'move_down', 'move_to_top', 'move_to_bottom' end"
+    route_config << " end end"
     route route_config
   end
 

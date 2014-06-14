@@ -1,14 +1,18 @@
-<%= simple_form_for [:admin, @<%= singular_table_name %>], :url => url, :html => { :class => 'form-horizontal', :autocomplete => "off", :multipart => true } do |f| %>
+<%%= simple_form_for [:admin, @<%= singular_table_name %>], :html => { :class => 'form-horizontal', :autocomplete => "off", :multipart => true } do |f| %>
   <fieldset>
     <% @attributes.each do |attribute| -%>
       <% next if ["id", "created_at", "updated_at"].include?(attribute.name) -%>
-      <%%= f.input :<%= attribute.name %>, :label => "<%= attribute.name.capitalize %>" %>
+      <% if attribute.type.to_s == "text" %>
+        <%%= f.input :<%= attribute.name %>, :label => <%= class_name %>.human_attribute_name(:<%= attribute.name %>), :input_html => {:class => "span6", :rows => 5} %>
+      <% else %>
+        <%%= f.input :<%= attribute.name %>, :label => <%= class_name %>.human_attribute_name(:<%= attribute.name %>), :input_html => {:class => "span6"} %>
+      <% end %>
     <% end -%>
   </fieldset>
 
   <div class="form-actions">
-    <%= f.button :submit, "Kaydet", :class => 'btn-primary' %>
-    <%= link_to "Yeni Kayıt", new_admin_<%= singular_table_name %>_path, :class => 'btn btn-warning' %>
-    <%= link_to "Geri Dön", admin_<%= plural_table_name %>_path(:back => true), :class => 'btn' %>
+    <%%= f.button :submit, "Kaydet", :class => 'btn-primary' %>
+    <%%= link_to "Yeni Kayıt", new_admin_<%= singular_table_name %>_path, :class => 'btn btn-warning' %>
+    <%%= link_to "Geri Dön", admin_<%= plural_table_name %>_path(:back => true), :class => 'btn' %>
   </div>
-<% end %>
+<%% end %>

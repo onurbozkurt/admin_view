@@ -1,9 +1,9 @@
-<% @title = "<%= human_name.pluralize %>" %>
+<%% @title = "<%= human_name.pluralize %>" %>
 
-<div class="pull-right"><%= will_paginate @<%= plural_table_name %>, :renderer => BootstrapPagination::Rails %></div>
+<div class="pull-right"><%%= will_paginate @<%= plural_table_name %>, :renderer => BootstrapPagination::Rails %></div>
 <div class="pull-left">
-  <div class="btn-toolbar">
-    <%= link_to "Yeni Kayıt", new_admin_<%= singular_table_name %>_path, :class => "btn btn-primary" %>
+  <div class="btn-toolbar no-top-margin">
+    <%%= link_to "Yeni Kayıt", new_admin_<%= singular_table_name %>_path, :class => "btn btn-primary" %>
     <%% if params[:q] %>
       <div class="btn-group">
         <a href="#filters" role="button" class="btn btn-warning" data-toggle="modal"><i class="icon-filter"></i> Filtrele</a>
@@ -11,13 +11,13 @@
           <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
-          <li><%= link_to "Temizle", admin_<%= plural_table_name %>_path, :class => '' %></li>
+          <li><%%= link_to "Temizle", admin_<%= plural_table_name %>_path, :class => '' %></li>
         </ul>
       </div>
     <%% else %>
       <a href="#filters" role="button" class="btn" data-toggle="modal"><i class="icon-filter"></i> Filtrele</a>
     <%% end %>
-    <%= link_to raw('<i class="icon-black icon-file"></i> Export'), admin_<%= plural_table_name %>_path(params.merge(format: 'xls')), :class => "btn" %>
+    <%%= link_to raw('<i class="icon-black icon-file"></i> Export'), admin_<%= plural_table_name %>_path(params.merge(format: 'xls')), :class => "btn" %>
   </div>
 </div>
 
@@ -26,7 +26,8 @@
     <tr>
       <th width="50">No</th>
       <% @attributes.each do |attribute| -%>
-        <th width=""><%= attribute.name %></th>
+        <% next if %w(id created_at updated_at).include?(attribute.name) -%>
+        <th width=""><%%= <%= class_name %>.human_attribute_name :<%= attribute.name %> %><%# attribute.type %></th>
       <% end -%>
       <th width="50"></th>
     </tr>
@@ -34,38 +35,42 @@
   <tbody>
     <%% @<%= plural_table_name %>.each do |<%= singular_table_name %>| %>
       <tr>
-        <td class="center nobr"><%%= link_to("##{<%= singular_table_name %>.id}, admin_<%= singular_table_name %>_path(<%= singular_table_name %>)) %></td>
+        <td class="center nobr"><%%= link_to("##{<%= singular_table_name %>.id}", admin_<%= singular_table_name %>_path(<%= singular_table_name %>)) %></td>
         <% @attributes.each do |attribute| -%>
-          <% next if attribute.name == "id" -%>
-            <td class="nobr"><%%= <%= singular_table_name %>.<%= attribute.name %> %></td>
-          <% end -%>
-          <td>
-            <div class="btn-group">
-              <a class="btn btn-link btn-small dropdown-toggle" data-toggle="dropdown" href="#">
-                İşlemler&nbsp;
-                <span class="caret"></span>
-              </a>
-              <ul class="dropdown-menu pull-right">
-                <li><%%= link_to('Düzenle', edit_admin_<%= singular_table_name %>_path(<%= singular_table_name %>)) %></li>
-                <li class="divider"></li>
-                <li><%%= link_to('Sil', admin_<%= singular_table_name %>_path(<%= singular_table_name %>), :confirm => "Are you sure?", :method => :delete) %></li>
-              </ul>
-            </div>
-          </td>
+          <% next if %w(id created_at updated_at).include?(attribute.name) -%>
+          <td class="nobr <%= "right" if [:decimal, :integer].include?(attribute.type) %>"><%%= <%= singular_table_name %>.<%= attribute.name %> %></td>
         <% end -%>
+        <td>
+          <div class="btn-group">
+            <a class="btn btn-link btn-small dropdown-toggle" data-toggle="dropdown" href="#">
+              İşlemler&nbsp;
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu pull-right">
+              <li><%%= link_to('Düzenle', edit_admin_<%= singular_table_name %>_path(<%= singular_table_name %>)) %></li>
+              <li class="divider"></li>
+              <li><%%= link_to "En Üste Taşı", move_to_top_admin_<%= singular_table_name %>_path(<%= singular_table_name %>), :class => '' %></li>
+              <li><%%= link_to "Yukarı Taşı", move_up_admin_<%= singular_table_name %>_path(<%= singular_table_name %>), :class => '' %></li>
+              <li><%%= link_to "Aşağı Taşı", move_down_admin_<%= singular_table_name %>_path(<%= singular_table_name %>), :class => '' %></li>
+              <li><%%= link_to "En Alta Taşı", move_to_bottom_admin_<%= singular_table_name %>_path(<%= singular_table_name %>), :class => '' %></li>
+              <li class="divider"></li>
+              <li><%%= link_to('Sil', admin_<%= singular_table_name %>_path(<%= singular_table_name %>), :confirm => "Are you sure?", :method => :delete) %></li>
+            </ul>
+          </div>
+        </td>
       </tr>
     <%% end %>
   </tbody>
 </table>
 
 <div class="alert alert-block">
-  Toplam Adet : <strong><%= @<%= plural_table_name %>.total_entries %></strong>
+  Toplam Adet : <strong><%%= @<%= plural_table_name %>.total_entries %></strong>
 </div>
 
-<%= will_paginate @<%= plural_table_name %>, :renderer => BootstrapPagination::Rails %>
+<%%= will_paginate @<%= plural_table_name %>, :renderer => BootstrapPagination::Rails %>
 
 <div id="filters" class="modal hide fade" tabindex="-1" data-width="760" data-focus-on="input:first">
-  <%= search_form_for @q, :url => admin_<%= plural_table_name %>_path, :builder => SimpleForm::FormBuilder, :html => {:method => :get, :autocomplete => "off", :class => "form-inline form-horizontal"} do |f| %>
+  <%%= search_form_for @q, :url => admin_<%= plural_table_name %>_path, :builder => SimpleForm::FormBuilder, :html => {:method => :get, :autocomplete => "off", :class => "form-inline form-horizontal"} do |f| %>
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
       <h3>Filtrele</h3>
@@ -73,15 +78,15 @@
     <div class="modal-body">
       <fieldset>
         <% @attributes.each do |attribute| -%>
-          <%%= f.input :<%= attribute.name %>_eq, :label => "<%= attribute.name %>" %>
+          <%%= f.input :<%= attribute.name %>_eq, :label => <%= class_name %>.human_attribute_name(:<%= attribute.name %>) %>
         <% end -%>
       </fieldset>
     </div>
     <div class="modal-footer">
       <div class="btn-group">
-        <%= link_to "Temizle", admin_<%= plural_table_name %>_path, :class => 'btn' %>
-        <%= f.button :submit, "Filtrele", :class => 'btn btn-warning' %>
+        <%%= link_to "Temizle", admin_<%= plural_table_name %>_path, :class => 'btn' %>
+        <%%= f.button :submit, "Filtrele", :class => 'btn btn-warning' %>
       </div>
     </div>
-  <% end %>
+  <%% end %>
 </div>
