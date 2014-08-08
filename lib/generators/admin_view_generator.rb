@@ -27,6 +27,7 @@ class AdminViewGenerator < Rails::Generators::NamedBase
   end
 
   def add_resource_route
+    return false
     return if not File.exists?("config/routes.rb")
     route_config =  "namespace :admin do "
     route_config << "resources :#{file_name.pluralize} do "
