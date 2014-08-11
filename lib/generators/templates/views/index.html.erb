@@ -1,6 +1,6 @@
 <%% @title = "<%= human_name.pluralize %>" %>
 
-<div class="pull-right"><%%= will_paginate @<%= plural_table_name %>, :renderer => BootstrapPagination::Rails %></div>
+<div class="pull-right"><%%= paginate @<%= plural_table_name %>, :theme => "twitter-bootstrap" %></div>
 <div class="pull-left">
   <div class="btn-toolbar no-top-margin">
     <%%= link_to "Yeni Kayıt", new_admin_<%= singular_table_name %>_path, :class => "btn btn-primary" %>
@@ -64,10 +64,10 @@
 </table>
 
 <div class="alert alert-block">
-  Toplam Adet : <strong><%%= @<%= plural_table_name %>.total_entries %></strong>
+  Toplam Adet : <strong><%%= @<%= plural_table_name %>.total_count %></strong>
 </div>
 
-<%%= will_paginate @<%= plural_table_name %>, :renderer => BootstrapPagination::Rails %>
+<%%= paginate @<%= plural_table_name %>, :theme => "twitter-bootstrap" %>
 
 <div id="filters" class="modal hide fade" tabindex="-1" data-width="760" data-focus-on="input:first">
   <%%= search_form_for @q, :url => admin_<%= plural_table_name %>_path, :builder => SimpleForm::FormBuilder, :html => {:method => :get, :autocomplete => "off", :class => "form-inline form-horizontal"} do |f| %>

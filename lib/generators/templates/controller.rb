@@ -10,7 +10,7 @@ class Admin::<%= controller_class_name %>Controller < Admin::BaseController
     @<%= plural_table_name %> = @q.result(distinct: true).order("id desc")
 
     respond_to do |format|
-      format.html { @<%= plural_table_name %> = @<%= plural_table_name %>.page(params[:page]).per_page(50) }
+      format.html { @<%= plural_table_name %> = @<%= plural_table_name %>.page(params[:page]).per(50) }
       format.xls { send_data(@<%= plural_table_name %>.to_xls) }
     end
   end
