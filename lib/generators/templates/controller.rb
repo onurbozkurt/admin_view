@@ -24,7 +24,7 @@ class Admin::<%= controller_class_name %>Controller < Admin::BaseController
 
     respond_to do |format|
       if @<%= singular_table_name %>.save
-        format.html { redirect_to [:admin, @<%= singular_table_name %>], notice: '<%= human_name.downcase %> başarıyla oluşturuldu.' }
+        format.html { redirect_to [:admin, @<%= singular_table_name %>], notice: 'Kayıt başarıyla oluşturuldu.' }
         format.json { render :show, status: :created, location: @<%= singular_table_name %> }
       else
         format.html { render :new }
@@ -43,7 +43,7 @@ class Admin::<%= controller_class_name %>Controller < Admin::BaseController
   def update
     respond_to do |format|
       if @<%= singular_table_name %>.update_attributes(<%= singular_table_name %>_params)
-        format.html { redirect_to [:admin, @<%= singular_table_name %>], notice: '<%= human_name.downcase %> başarıyla güncellendi.' }
+        format.html { redirect_to [:admin, @<%= singular_table_name %>], notice: 'Kayıt başarıyla güncellendi.' }
         format.json { render :show, status: :ok, location: @<%= singular_table_name %> }
       else
         format.html { render :edit }
@@ -54,9 +54,9 @@ class Admin::<%= controller_class_name %>Controller < Admin::BaseController
 
   def destroy
     if @<%= singular_table_name %>.destroy
-      redirect_to admin_<%= plural_table_name %>_path(back: true), :notice => "<%= human_name %> başarıyla silindi."
+      redirect_to admin_<%= plural_table_name %>_path(back: true), :notice => "Kayıt başarıyla silindi."
     else
-      redirect_to @<%= singular_table_name %>, :error => "<%= human_name %> silinemedi."
+      redirect_to admin_<%= plural_table_name %>_path(back: true), :error => "Kayıt silinemedi."
     end
   end
 
