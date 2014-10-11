@@ -4,14 +4,14 @@ class Admin::<%= controller_class_name %>Controller < Admin::BaseController
 
   def index
     return redirect_to session[:filter_<%= plural_table_name %>] if session[:filter_<%= plural_table_name %>] && params[:back] == "true"
-    session[:filter_<%= plural_table_name %>] = request.original_url
+    session[:filter_<%= plural_table_name %>] = request.original_url unless request.original_url.include?(".xls")
 
     @q = <%= class_name %>.search(params[:q])
     @<%= plural_table_name %> = @q.result(distinct: true).order("id desc")
 
     respond_to do |format|
       format.html { @<%= plural_table_name %> = @<%= plural_table_name %>.page(params[:page]).per(50) }
-      format.xls { send_data(@<%= plural_table_name %>.to_xls) }
+      format.xls { send_data(@<%= plural_table_name %>.to_xls :header => true, :header_columns => <%= class_name %>.header_columns.values, :only => <%= class_name %>.header_columns.keys) }
     end
   end
 

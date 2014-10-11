@@ -78,7 +78,7 @@
     <div class="modal-body">
       <fieldset>
         <% @attributes.each do |attribute| -%>
-          <%%= f.input :<%= attribute.name %>_eq, :label => <%= class_name %>.human_attribute_name(:<%= attribute.name %>) %>
+          <%%= f.input :<%= attribute.name %>_eq, :label => <%= class_name %>.human_attribute_name(:<%= attribute.name %>), :input_html => {:class => "span10"} %>
         <% end -%>
       </fieldset>
     </div>
