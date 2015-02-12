@@ -3,9 +3,9 @@
     <% @attributes.each do |attribute| -%>
       <% next if ["id", "created_at", "updated_at"].include?(attribute.name) -%>
       <% if attribute.type.to_s == "text" %>
-        <%%= f.input :<%= attribute.name %>, :label => <%= class_name %>.human_attribute_name(:<%= attribute.name %>), :input_html => {:class => "span6", :rows => 5} %>
+        <%%= f.input :<%= attribute.name %>, :label => "<%= attribute.name %>", :input_html => {:class => "span6", :rows => 5} %>
       <% else %>
-        <%%= f.input :<%= attribute.name %>, :label => <%= class_name %>.human_attribute_name(:<%= attribute.name %>), :input_html => {:class => "span6"} %>
+        <%%= f.input :<%= attribute.name %>, :label => "<%= attribute.name %>", :input_html => {:class => "span6"} %>
       <% end %>
     <% end -%>
   </fieldset>

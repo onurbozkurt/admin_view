@@ -27,7 +27,7 @@
       <th width="50">ID</th>
       <% @attributes.each do |attribute| -%>
         <% next if %w(id created_at updated_at).include?(attribute.name) -%>
-        <th width=""><%%= <%= class_name %>.human_attribute_name :<%= attribute.name %> %><%# attribute.type %></th>
+        <th width=""><%= attribute.name %><%# attribute.type %></th>
       <% end -%>
       <th width="50"></th>
     </tr>
@@ -78,7 +78,7 @@
     <div class="modal-body">
       <fieldset>
         <% @attributes.each do |attribute| -%>
-          <%%= f.input :<%= attribute.name %>_eq, :label => <%= class_name %>.human_attribute_name(:<%= attribute.name %>), :input_html => {:class => "span10"} %>
+          <%%= f.input :<%= attribute.name %>_eq, :label => "<%= attribute.name %>", :input_html => {:class => "span10"} %>
         <% end -%>
       </fieldset>
     </div>
