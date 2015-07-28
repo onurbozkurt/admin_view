@@ -11,7 +11,7 @@
   </fieldset>
 
   <div class="form-actions">
-    <%%= f.button :submit, "Kaydet", :class => 'btn-primary' %>
+    <%%= f.button :submit, "Kaydet", :class => 'btn-primary', data: { disable_with: "Lütfen bekleyin..." } %>
     <%%= link_to "Yeni Kayıt", new_admin_<%= singular_table_name %>_path, :class => 'btn btn-warning' %>
     <%%= link_to "Geri Dön", admin_<%= plural_table_name %>_path(:back => true), :class => 'btn' %>
   </div>
